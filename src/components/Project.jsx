@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import sentinaiImage from '../assets/sentinai.png';
+import schemesetuImage from '../assets/schemesetu.png';
 
 const projects = [
   {
@@ -9,11 +11,11 @@ const projects = [
         CODE SECURITY PLATFORM
       </>
     ),
-    description: "Built an AI-powered code security platform that processes GitHub PR webhooks and runs AST-based vulnerability scans using Google Gemini 2.5 Pro via LangChain4j. Implemented a RAG pipeline with PgVector (768-dim embeddings) for cross-file context retrieval, improving multi-file audit accuracy. Designed resilient infrastructure with circuit-breaker fallback, SHA-256 API key authentication, and Redis-backed rate limiting. Built a React 19 + TypeScript dashboard with a split-pane PR Diff Studio for inline vulnerability review; containerized with Docker and automated CI/CD across Render, Vercel, and GitHub Actions.",
-    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=2000&auto=format&fit=crop",
+    description: "An autonomous AI-powered code security and PR review platform that combines AST-based vulnerability scanning with a Retrieval-Augmented Generation (RAG) pipeline for cross-file repository context. Built with Spring Boot and Google Gemini 2.5 Pro via LangChain4j, it uses PgVector (768-dim embeddings) for semantic code retrieval, SHA-256 zero-trust API key authentication, and Redis-backed rate limiting with local fallback. Integrates directly with GitHub via HMAC-verified webhooks to automatically audit pull requests, and ships with a React 19 + TypeScript console featuring a split-pane PR Diff Studio for reviewing findings.",
+    image: sentinaiImage,
     github: "https://github.com/rachit-890/AICodeReviewBot",
     demo: "https://ai-code-review-bot-eight.vercel.app/#features",
-    tech: "Java 21, Spring Boot 3.4, LangChain4j, Gemini 2.5 Pro, PostgreSQL/PgVector, Redis, React 19, TypeScript, Docker"
+    tech: "Backend: Spring Boot, GitHub API, Google Gemini 2.5 Pro (via LangChain4j) | RAG: PgVector (768-dim embeddings), circuit-breaker fallback embedding store | Auth/Rate limiting: SHA-256 zero-trust API key auth, Redis rate limiting with thread-safe local fallback | Security: HMAC-SHA256 GitHub Webhook verification | Persistence: PostgreSQL + Flyway | Frontend: React 19 + TypeScript, Vite, Framer Motion (58/42 split-pane PR Diff Studio) | DevOps: Docker, CI/CD via Render (backend), Vercel (frontend), GitHub Actions"
   },
   {
     name: 'SchemeSetu — AI Government Welfare Scheme Eligibility Navigator',
@@ -23,11 +25,11 @@ const projects = [
         ELIGIBILITY NAVIGATOR
       </>
     ),
-    description: "Building a RAG-based eligibility matcher that helps citizens discover government welfare schemes (subsidies, scholarships, pensions) through a guided, plain-language questionnaire. Architecting the backend with Spring Boot 3 and Spring AI, integrating an LLM for eligibility reasoning and a dedicated embedding provider for semantic scheme matching via PgVector. Designing the PostgreSQL/PgVector data layer with Redis caching and a React/Vite frontend, containerized with Docker for deployment across Render and Vercel. Following a phase-based Git branching workflow, with each phase reviewed and merged via pull request.",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2000&auto=format&fit=crop",
+    description: "A RAG-based eligibility matching platform that helps citizens discover government welfare schemes — subsidies, scholarships, pensions — relevant to them through a guided questionnaire and plain-language explanations. Built on Java 21 and Spring Boot 3 with Spring AI, using Claude for conversational generation and a dedicated embedding provider (OpenAI text-embedding-3-small, with Ollama as a local alternative) for semantic scheme matching over a PostgreSQL + PgVector store, with Redis for caching. Deployed as a containerized full-stack app (React/Vite frontend, Spring Boot backend) via Vercel and Render.",
+    image: schemesetuImage,
     github: "https://github.com/rachit-890/SchemeSetu",
-    demo: null, // In Development
-    tech: "Java 21, Spring Boot 3, Spring AI, PostgreSQL/PgVector, Redis, React, Vite, Docker"
+    demo: "https://scheme-setu-kappa.vercel.app/",
+    tech: "Backend: Java 21, Spring Boot 3 | AI: Spring AI (spring-ai-starter-model-anthropic) with Claude for chat/generation, separate embedding provider (OpenAI text-embedding-3-small, or Ollama locally) | Data: PostgreSQL + PgVector, Redis | Frontend: React/Vite | DevOps: Docker, deployed via Render (backend) + Vercel (frontend)"
   }
 ];
 
@@ -89,21 +91,12 @@ const Project = ({ onCtaClick }) => {
                 </p>
 
                 <div className="flex items-center gap-4 flex-wrap">
-                  {proj.demo ? (
-                    <a href={proj.demo} target="_blank" rel="noopener noreferrer" className="cursor-pointer px-6 py-2.5 rounded-full border border-[#ccff00] bg-[#ccff00] text-black text-xs md:text-sm font-medium hover:bg-[#b3e600] hover:border-[#b3e600] transition-colors inline-flex items-center gap-2">
-                      Live Demo
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-                      </svg>
-                    </a>
-                  ) : (
-                    <button onClick={onCtaClick} className="cursor-pointer px-6 py-2.5 rounded-full border border-[#ccff00] bg-[#ccff00] text-black text-xs md:text-sm font-medium hover:bg-[#b3e600] hover:border-[#b3e600] transition-colors inline-flex items-center gap-2">
-                      In Development
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                      </svg>
-                    </button>
-                  )}
+                  <a href={proj.demo} target="_blank" rel="noopener noreferrer" className="cursor-pointer px-6 py-2.5 rounded-full border border-[#ccff00] bg-[#ccff00] text-black text-xs md:text-sm font-medium hover:bg-[#b3e600] hover:border-[#b3e600] transition-colors inline-flex items-center gap-2">
+                    Live Demo
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                  </a>
                   <a href={proj.github} target="_blank" rel="noopener noreferrer" className="cursor-pointer px-6 py-2.5 rounded-full border border-white/30 text-white text-xs md:text-sm hover:bg-white hover:text-black transition-colors inline-flex items-center gap-2">
                     GitHub
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
